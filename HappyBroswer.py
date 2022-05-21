@@ -17,12 +17,13 @@ class MainWindow(QMainWindow):
         self.browser = QWebEngineView()
  
         self.browser.setUrl(QUrl("https://duckduckgo.com/"))
-        self.setStyleSheet('QLineEdit {background-color:green}')
+        self.setStyleSheet('QLineEdit {background-color:pink}')
 
  
         self.browser.urlChanged.connect(self.update_urlbar)
  
         self.browser.loadFinished.connect(self.update_title)
+ 
  
         self.setCentralWidget(self.browser)
  
@@ -40,6 +41,7 @@ class MainWindow(QMainWindow):
         navtb.addAction(home_btn)
 
 
+
  
         navtb.addSeparator()
  
@@ -49,6 +51,17 @@ class MainWindow(QMainWindow):
  
         navtb.addWidget(self.urlbar)
 
+        back_btn = QAction('Go Back', self)
+        back_btn.triggered.connect(self.browser.back)
+        navtb.addAction(back_btn)
+
+        forward_btn = QAction('Go Forward', self)
+        forward_btn.triggered.connect(self.browser.forward)
+        navtb.addAction(forward_btn)
+        reload_btn = QAction('Refresh', self)
+        reload_btn.triggered.connect(self.browser.reload)
+        navtb.addAction(reload_btn)
+
  
  
         self.show()
@@ -56,7 +69,7 @@ class MainWindow(QMainWindow):
  
     def update_title(self):
         title = self.browser.page().title()
-        self.setWindowTitle("% s - Happy Broswer 1.0!" % title)
+        self.setWindowTitle("% s - Happy Broswer 2.0!" % title)
  
  
     def navigate_home(self):
@@ -78,6 +91,8 @@ class MainWindow(QMainWindow):
         self.urlbar.setText(q.toString())
  
         self.urlbar.setCursorPosition(0)
+    
+
  
  
 fss = QApplication(sys.argv)
